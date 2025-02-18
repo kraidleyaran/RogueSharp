@@ -96,7 +96,7 @@ namespace RogueSharp
       /// <param name="destination">The Cell which is at the end of the path</param>
       /// <exception cref="ArgumentNullException">Thrown when source or destination is null</exception>
       /// <returns>Returns a shortest Path containing a list of Cells from a specified source Cell to a destination Cell. If no path is found null will be returned</returns>
-      public Path TryFindShortestPath( ICell source, ICell destination )
+      public Path TryFindShortestPath( ICell source, ICell destination, bool skipTerrainBlockers = false )
       {
          if ( source == null )
          {
@@ -127,7 +127,7 @@ namespace RogueSharp
          {
             aStarShortestPath = new AStarShortestPath<TCell>();
          }
-         List<TCell> cells = aStarShortestPath.FindPath( (TCell) source, (TCell) destination, _map );
+         List<TCell> cells = aStarShortestPath.FindPath( (TCell) source, (TCell) destination, _map, skipTerrainBlockers );
          if ( cells == null )
          {
             return null;

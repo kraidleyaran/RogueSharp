@@ -205,6 +205,23 @@ namespace RogueSharp
          return "{X:" + X + " Y:" + Y + "}";
       }
 
+      public Point Direction( Point target )
+      {
+         var diff = target - this;
+         var direction = Zero;
+         if (diff.X != 0 )
+         {
+            direction.X = diff.X > 0 ? 1 : -1;
+         }
+
+         if ( diff.Y != 0 )
+         {
+            direction.Y = diff.Y > 0 ? 1 : -1;
+         }
+
+         return direction;
+      }
+
       /// <summary>
       ///   Calculates the distance between two points.
       /// </summary>

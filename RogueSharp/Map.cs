@@ -204,6 +204,11 @@ namespace RogueSharp
          _cells[x, y].IsWalkable = isWalkable;
       }
 
+      public void SetCellBlocking(int x, int y, DirectionalBlocker blocker )
+      {
+         _cells[x, y].Blocking = blocker;
+      }
+
       /// <summary>
       /// Sets the properties of all Cells in the Map to be transparent and walkable
       /// </summary>

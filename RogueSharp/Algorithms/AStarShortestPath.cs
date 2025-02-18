@@ -38,7 +38,7 @@ namespace RogueSharp.Algorithms
       /// <param name="destination">The destination Cell to find a shortest path to</param>
       /// <param name="map">The Map on which to find the shortest path between Cells</param>
       /// <returns>List of Cells representing a shortest path from the specified source to the specified destination. If no path is found null will be returned</returns>
-      public List<TCell> FindPath( TCell source, TCell destination, IMap<TCell> map )
+      public List<TCell> FindPath( TCell source, TCell destination, IMap<TCell> map, bool skipTerrainBlockers = false )
       {
          // OPEN = the set of nodes to be evaluated
          IndexMinPriorityQueue<PathNode> openNodes = new IndexMinPriorityQueue<PathNode>( map.Height * map.Width );
@@ -87,6 +87,15 @@ namespace RogueSharp.Algorithms
                {
                   // skip to the next neighbor
                   continue;
+               }
+               else if (!skipTerrainBlockers)
+               {
+                  var direction = new Point(currentCell.X, currentCell.Y).Direction(new Point(neighbor.X, neighbor.Y));
+                  if (!currentCell.IsPassableDirection(direction.X, direction.Y, true) || !neighbor.IsPassableDirection(direction.X, direction.Y, false))
+                  {
+                     //Skip if the current cell cannot get to the neighboring cell because of Terrain Blockables;
+                     continue;
+                  }
                }
 
                bool isNeighborInOpen = openNodes.Contains( neighborIndex );

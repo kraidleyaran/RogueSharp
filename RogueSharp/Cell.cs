@@ -56,7 +56,8 @@
       /// A Cell representing a solid stone wall would not be walkable
       /// </example>
       public bool IsWalkable { get; set; }
-      
+      public DirectionalBlocker Blocking { get; set; }
+
       /// <summary>
       /// Provides a simple visual representation of the Cell using the following symbols:
       /// - `.`: `Cell` is transparent and walkable
@@ -162,6 +163,64 @@
             hashCode = ( hashCode * 397 ) ^ IsWalkable.GetHashCode();
             return hashCode;
          }
+      }
+
+      public bool IsPassableDirection( int x, int y, bool inTile = false)
+      {
+         var xValue = x;
+         var yValue = y;
+         if ( !inTile )
+         {
+            xValue *= -1;
+            yValue *= -1;
+         }
+         if ( yValue > 0 )
+         {
+            if ( xValue != 0 )
+            {
+               return !Blocking.North && ( xValue > 0 ? !Blocking.East : !Blocking.West );
+            }
+            else
+            {
+               return !Blocking.North;
+            }
+
+         }
+         else if ( yValue < 0 )
+         {
+            if ( xValue != 0 )
+            {
+               return !Blocking.South && ( xValue > 0 ? !Blocking.East : !Blocking.West );
+            }
+            else
+            {
+               return !Blocking.South;
+            }
+         }
+         if ( xValue > 0 )
+         {
+            if ( yValue != 0 )
+            {
+               return !Blocking.East && ( yValue > 0 ? !Blocking.North : !Blocking.South );
+            }
+            else
+            {
+               return !Blocking.East;
+            }
+         }
+         else if ( xValue < 0 )
+         {
+            if ( yValue != 0 )
+            {
+               return !Blocking.West && ( yValue > 0 ? !Blocking.North : !Blocking.South );
+            }
+            else
+            {
+               return !Blocking.West;
+            }
+         }
+
+         return true;
       }
    }
 }

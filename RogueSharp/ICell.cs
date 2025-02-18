@@ -16,6 +16,7 @@ namespace RogueSharp
       /// Y location of the Cell starting with 0 as the top
       /// </summary>
       int Y { get; set; }
+      DirectionalBlocker Blocking { get; set; }
 
       /// <summary>
       /// Get the transparency of the Cell i.e. if line of sight would be blocked by this Cell
@@ -36,5 +37,10 @@ namespace RogueSharp
       /// A Cell representing a solid stone wall would not be walkable
       /// </example>
       bool IsWalkable { get; set; }
+
+      /// <summary>
+      /// Check if the direction has terrain blocking - within or outside the tile
+      /// </summary>
+      bool IsPassableDirection( int x, int y, bool inTile);
    }
 }
